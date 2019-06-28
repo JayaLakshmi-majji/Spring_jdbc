@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> Registration </title>
+	<script>
+		function show(){
+			var ul = document.getElementById("author");	
+			fetch("http://localhost:8080/user/register")
+			.then((resp) => resp.json())
+			.then(function (data) {
+		    	return data.map(function(show) {
+			    	let xx =createNode('tr');
+				    let li = createNode('td'),
+				    li1 = createNode('td'),
+				    li2 = createNode('td');
+				    li.innerHTML = `${show.name}`;
+				    li1.innerHTML = `${show.phnNo}`;
+				    li2.innerHTML = `${show.place}`;
+				    append(ul, xx);
+				    append(xx, li);
+				    append(xx,li1);
+				    append(xx,li2);
+			    })
+		  })
+	}
+	
+	function createNode(element) {
+	      return document.createElement(element);
+	}
+	function append(parent, el) {
+		 return parent.appendChild(el);
+	}
+	 
+	function add(){
+		var name = document.getElementById("name").value;
+		var phnno = document.getElementById("phnNo").value;
+		var place = document.getElementById("city").value; 
+		fetch("http://localhost:8080/user/push",{
+			method: "POST",
+			headers: {
+				'Content-Type': "application/json",
+			},
+			body: JSON.stringify({name:name,phnno:phnno,place:place}),
+		})
+		.then((body) => body.Json())
+	}
+	</script>
+	</head>
+	<body id="rData">		
+		<label>Name</label>&nbsp;
+		<input type = "text" name="name" id= "name">
+		<label>Phone Number</label>&nbsp;
+		<input type= "text" id="phnNo" name="phnNo">
+		<label>City</label>&nbsp;				
+		<input type = "text" name="place" id="city">
+		<p id= "xx"> </p>
+		<button id="btn" onclick="add()" >Submit</button> 
+		<button id="daabtn" onclick="show()" >data</button> 
+		<table id = "author" ></table>
+	</body>
+</html>

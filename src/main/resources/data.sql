@@ -1,0 +1,1 @@
+INSERT INTO register(name,phn_no,place) values('JAYA','990098','KKD');
